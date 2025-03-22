@@ -1,0 +1,96 @@
+local Players = game:GetService("Players")
+local GuiService = game:GetService("GuiService")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "InvisibilityGUI"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+-- Main Frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0.2, 0, 0.15, 0)
+mainFrame.Position = UDim2.new(0.02, 0, 0.85, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+mainFrame.BackgroundTransparency = 0.25
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
+
+-- UI Corner
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 8)
+uiCorner.Parent = mainFrame
+
+-- UI Stroke
+local uiStroke = Instance.new("UIStroke")
+uiStroke.Color = Color3.fromRGB(100, 100, 100)
+uiStroke.Thickness = 2
+uiStroke.Parent = mainFrame
+
+-- Invisibility Toggle Button
+local toggleButton = Instance.new("TextButton")
+toggleButton.Name = "ToggleButton"
+toggleButton.Size = UDim2.new(0.9, 0, 0.5, 0)
+toggleButton.Position = UDim2.new(0.05, 0, 0.05, 0)
+toggleButton.Text = "Toggle Invisibility: OFF"
+toggleButton.TextSize = 16
+toggleButton.Font = Enum.Font.GothamBold
+toggleButton.TextColor3 = Color3.new(1, 1, 1)
+toggleButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+toggleButton.Parent = mainFrame
+
+-- Discord Message
+local discordButton = Instance.new("TextButton")
+discordButton.Name = "DiscordButton"
+discordButton.Size = UDim2.new(0.9, 0, 0.3, 0)
+discordButton.Position = UDim2.new(0.05, 0, 0.6, 0)
+discordButton.Text = "เข้าดิส Gonp hub: https://discord.gg/pWT5kfg9fn"
+discordButton.TextSize = 14
+discordButton.Font = Enum.Font.Gotham
+discordButton.TextColor3 = Color3.fromRGB(88, 101, 242)
+discordButton.BackgroundTransparency = 1
+discordButton.Parent = mainFrame
+
+-- Button Corners
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(0, 6)
+buttonCorner.Parent = toggleButton
+
+-- Invisibility System
+local isInvisible = false
+
+local function setCharacterVisibility(visible)
+    local character = player.Character
+    if character then
+        for _, part in ipairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.LocalTransparencyModifier = visible and 0 or 1
+            end
+        end
+    end
+end
+
+local function toggleVisibility()
+    isInvisible = not isInvisible
+    toggleButton.Text = "Toggle Invisibility: " .. (isInvisible and "ON" or "OFF")
+    toggleButton.BackgroundColor3 = isInvisible and Color3.fromRGB(0, 170, 0) or Color3.fromRGB(80, 80, 80)
+    setCharacterVisibility(not isInvisible)
+end
+
+-- Handle character respawns
+player.CharacterAdded:Connect(function(character)
+    if isInvisible then
+        setCharacterVisibility(false)
+    end
+end)
+
+-- Discord Link Handler
+local function openDiscord()
+    GuiService:OpenBrowserWindow("https://discord.gg/pWT5kfg9fn")
+end
+
+-- Connect Events
+toggleButton.MouseButton1Click:Connect(toggleVisibility)
+discordButton.MouseButton1Click:Connect(openDiscord)
