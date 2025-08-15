@@ -126,7 +126,7 @@ if makefolder and isfolder and writefile and isfile then
     end)
 end
 
-currentVersion = "6.3.3"
+currentVersion = "ถามพ่องดู"
 
 ScaledHolder = Instance.new("Frame")
 Scale = Instance.new("UIScale")
@@ -324,11 +324,11 @@ Title.BorderSizePixel = 0
 Title.Size = UDim2.new(0, 250, 0, 20)
 Title.Font = Enum.Font.SourceSans
 Title.TextSize = 18
-Title.Text = "Infinite Yield FE v" .. currentVersion
+Title.Text = "หีหมา version" .. currentVersion
 
 do
 	local emoji = ({
-		["01 01"] = "🎆",
+		["01 01"] = "สุขสันนปีใหม่พวกหน้าหี",
 		[(function(Year)
 			local A = math.floor(Year/100)
 			local B = math.floor((13+8*A)/25)
@@ -346,8 +346,8 @@ do
 			end
 			return ("03 %02d"):format(G)
 		end)(tonumber(os.date"%Y"))] = "🥚",
-		["10 31"] = "🎃",
-		["12 25"] = "🎄"
+		["10 31"] = "แฮร่ กลัวไหมสัส",
+		["12 25"] = "ซานต้าหน้าหีมาแล้ว"
 	})[os.date("%m %d")]
 	if emoji then
 		Title.Text = ("%s %s %s"):format(emoji, Title.Text, emoji)
